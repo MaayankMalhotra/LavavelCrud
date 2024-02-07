@@ -53,4 +53,17 @@ class ProductController extends Controller
         $product->delete();
         return redirect(route('product.index'))->with('success', 'Product deleted Succesffully');
     }
+   
+
+public function deleteMultiple(Request $request)
+{
+    $selectedProductIds = $request->input('selected_products', []);
+
+    if (!empty($selectedProductIds)) {
+        Product::whereIn('id', $selectedProductIds)->delete();
+    }
+
+    return redirect()->route('products.index');
+}
+
 }
